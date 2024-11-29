@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Slider</title>
+    <!-- Correct Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+        }
+
+        .slider-container {
+            position: relative;
+            max-width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .caption {
+            text-align: center;
+            z-index: 10;
+            padding: 20px;
+            border-radius: 10px;
+            height: 80%;
+        }
+
+        .caption p {
+            padding: 30px;
+        }
+
+        .caption h1 {
+            font: 800 3rem "Oswald", sans-serif;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .telegram-link {
+            display: inline-block;
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 20px;
+            position: relative;
+            transition: all 0.3s ease-in-out;
+            overflow: hidden;
+            animation: colorChange 2s infinite;
+        }
+
+        @keyframes colorChange {
+            0%, 100% {
+                background-color: blue;
+            }
+            50% {
+                background-color: orange;
+            }
+        }
+
+        .telegram-link:hover {
+            transform: scale(1.1);
+        }
+
+        .telegram-link .fa {
+            margin-right: 10px;
+            font-size: 1.5em;
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1.5em;
+            border-radius: 50%;
+            z-index: 10;
+            transition: background 0.3s;
+        }
+
+        .arrow:hover {
+            background: rgba(255, 87, 34, 0.8);
+        }
+
+        .arrow-left {
+            left: 20px;
+        }
+
+        .arrow-right {
+            right: 20px;
+        }
+
+        .timer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 1.2em;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 20px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 24px;
+            color: white;
+            text-decoration: none;
+            animation: pulse 2s infinite, colorChange 3s infinite;
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            animation-play-state: paused;
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 rgba(0, 0, 255, 0.5);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 25px rgba(0, 0, 255, 0.5);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 rgba(0, 0, 255, 0.5);
+            }
+        }
+
+        svg {
+            animation: svgPulse 2s infinite;
+            padding-bottom: 20px;
+            height: 180px;
+        }
+
+        @keyframes svgPulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .accu{
+            padding-top: 2%;
+        }
+
+        /* Adjust SVG for Desktop View */
+        @media (min-width: 769px) {
+            svg {
+                height: 300px;
+                display: block;
+                margin: 0 auto;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .caption h1 {
+                font-size: 2rem;
+            }
+
+            .telegram-link {
+                font-size: 1em;
+                padding: 10px 20px;
+            }
+
+            .arrow {
+                font-size: 1.2em;
+            }
+
+            .timer {
+                font-size: 1em;
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .caption h1 {
+                font-size: 1.5rem;
+            }
+
+            .telegram-link {
+                font-size: 0.9em;
+                padding: 8px 15px;
+            }
+
+            .arrow {
+                font-size: 1em;
+                padding: 5px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slider-container">
+        <button class="arrow arrow-left">&#10094;</button>
+        <button class="arrow arrow-right">&#10095;</button>
+        <div class="slider">
+            <!-- Slide 1 -->
+            <div class="slide">
+                <img src="img1.jpg" alt="Slide 1">
+                <div class="caption">
+                    <h1>🎯 NAMAN TYAGI 🎯</h1>
+                    <p>🏏Cricket Fixing Ke Sache Saathi!🏏</p>
+                    <svg width="800px" height="800px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="14" fill="url(#paint0_linear_87_7225)"/>
+                        <path d="M22.9866 10.2088C23.1112 9.40332 22.3454 8.76755 21.6292 9.082L7.36482 15.3448C6.85123 15.5703 6.8888 16.3483 7.42147 16.5179L10.3631 17.4547C10.9246 17.6335 11.5325 17.541 12.0228 17.2023L18.655 12.6203C18.855 12.4821 19.073 12.7665 18.9021 12.9426L14.1281 17.8646C13.665 18.3421 13.7569 19.1512 14.314 19.5005L19.659 22.8523C20.2585 23.2282 21.0297 22.8506 21.1418 22.1261L22.9866 10.2088Z" fill="white"/>
+                        <defs>
+                        <linearGradient id="paint0_linear_87_7225" x1="16" y1="2" x2="16" y2="30" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#37BBFE"/>
+                        <stop offset="1" stop-color="#007DBB"/>
+                        </linearGradient>
+                        </defs>
+                        </svg>
+                    <a href="https://telegram.me/+YbMEtxfbV4FhNTMx" class="btn" target="_blank">
+                        <i class="fab fa-telegram-plane"></i> Join Telegram
+                    </a><br>
+                    <p class="accu">⚡️ 90% ACCURACY ⚡️</p>
+                </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="slide">
+                <img src="img2.jpg" alt="Slide 2">
+                <div class="caption">
+                    <h1>🎯 NAMAN TYAGI 🎯</h1>
+                    <p>🏏Cricket Fixing Ke Sache Saathi!🏏</p>
+                    <svg width="800px" height="800px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="14" fill="url(#paint0_linear_87_7225)"/>
+                        <path d="M22.9866 10.2088C23.1112 9.40332 22.3454 8.76755 21.6292 9.082L7.36482 15.3448C6.85123 15.5703 6.8888 16.3483 7.42147 16.5179L10.3631 17.4547C10.9246 17.6335 11.5325 17.541 12.0228 17.2023L18.655 12.6203C18.855 12.4821 19.073 12.7665 18.9021 12.9426L14.1281 17.8646C13.665 18.3421 13.7569 19.1512 14.314 19.5005L19.659 22.8523C20.2585 23.2282 21.0297 22.8506 21.1418 22.1261L22.9866 10.2088Z" fill="white"/>
+                        <defs>
+                        <linearGradient id="paint0_linear_87_7225" x1="16" y1="2" x2="16" y2="30" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#37BBFE"/>
+                        <stop offset="1" stop-color="#007DBB"/>
+                        </linearGradient>
+                        </defs>
+                        </svg>
+                    <a href="https://telegram.me/+YbMEtxfbV4FhNTMx" class="btn" target="_blank">
+                        <i class="fab fa-telegram-plane"></i> Join Telegram 
+                    </a><br>
+                    <p class="accu">⚡️ 90% ACCURACY ⚡️</p>
+                </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="slide">
+                <img src="img3.jpg" alt="Slide 3">
+                <div class="caption">
+                    <h1>🎯 NAMAN TYAGI 🎯</h1>
+                    <p>🏏Cricket Fixing Ke Sache Saathi!🏏</p>
+                    <svg width="800px" height="800px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="14" fill="url(#paint0_linear_87_7225)"/>
+                        <path d="M22.9866 10.2088C23.1112 9.40332 22.3454 8.76755 21.6292 9.082L7.36482 15.3448C6.85123 15.5703 6.8888 16.3483 7.42147 16.5179L10.3631 17.4547C10.9246 17.6335 11.5325 17.541 12.0228 17.2023L18.655 12.6203C18.855 12.4821 19.073 12.7665 18.9021 12.9426L14.1281 17.8646C13.665 18.3421 13.7569 19.1512 14.314 19.5005L19.659 22.8523C20.2585 23.2282 21.0297 22.8506 21.1418 22.1261L22.9866 10.2088Z" fill="white"/>
+                        <defs>
+                        <linearGradient id="paint0_linear_87_7225" x1="16" y1="2" x2="16" y2="30" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#37BBFE"/>
+                        <stop offset="1" stop-color="#007DBB"/>
+                        </linearGradient>
+                        </defs>
+                        </svg>
+                    <a href="https://telegram.me/+YbMEtxfbV4FhNTMx" class="btn" target="_blank">
+                        <i class="fab fa-telegram-plane"></i> Join Telegram 
+                    </a><br>
+                    <p class="accu">⚡️ 90% ACCURACY ⚡️</p>
+                </div>
+            </div>
+        </div>
+        <div class="timer">
+            <p>FREE JOINING ENDS IN... <span id="timer">60</span></p>
+        </div>
+    </div>
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slider = document.querySelector('.slider');
+        const prevButton = document.querySelector('.arrow-left');
+        const nextButton = document.querySelector('.arrow-right');
+        const timerElement = document.getElementById('timer');
+        let currentSlide = 0;
+        let timeLeft = 60;
+
+        function goToSlide(index) {
+            currentSlide = (index + slides.length) % slides.length;
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        let slideInterval = setInterval(() => {
+            goToSlide(currentSlide + 1);
+        }, 3000);
+
+        function resetInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(() => {
+                goToSlide(currentSlide + 1);
+            }, 3000);
+        }
+
+        prevButton.addEventListener('click', () => {
+            goToSlide(currentSlide - 1);
+            resetInterval();
+        });
+
+        nextButton.addEventListener('click', () => {
+            goToSlide(currentSlide + 1);
+            resetInterval();
+        });
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            timerElement.textContent = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                window.location.href = "https://telegram.me/+YbMEtxfbV4FhNTMx";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
